@@ -3,12 +3,12 @@
 `Pen.py` не менялся. В классе пять дефектов, их должны поймать падающие тесты.
 Письменные ответы по бланкам в этот репозиторий не входят: их удобнее отправить отдельным файлом.
 
-Каркас вырос из [back_autotest_pydantic](https://github.com/dnsbutylin/back_autotest_pydantic):
-pytest, Allure (`case` / `step`), фикстура на соединение с базой. Отдельные
-модели на вход и на ответ убраны. Их заменяет один класс `Contract`
-(`src/contract.py`): он валидирует данные ручки и он же описывает контракт
-результата, с которым тест сравнивает `Pen`. Клиент Users и PostgreSQL сюда
-не переносились: тестируется класс и выборки из условия.
+Каркас — [back_autotest_pydantic](https://github.com/dnsbutylin/back_autotest_pydantic):
+pytest, Allure (`case` / `step`), фикстура на соединение с базой. Как и там,
+отдельной модели «на создание» нет. `PenResponse` в `src/models.py` — pydantic-класс:
+он проверяет данные ручки и он же описывает ответ методов. Строки SQL читаются
+в `SubscriberNumberResponse`, `OrdinarySubscriberResponse` и `PhoneNumberResponse`
+через `from_db_tuple`, по той же схеме, что `UserResponse`.
 
 ## Запуск
 
@@ -37,7 +37,7 @@ $env:PYTHONIOENCODING = "utf-8"
 
 ## Дефекты Pen
 
-Формула живёт в `Contract.written` и `Contract.ink_after`, а не в каждом тесте.
+Формула живёт в `PenResponse.after_write`, а не в каждом тесте.
 Если чернил больше нуля, можно записать `floor(чернила / size_letter)` символов.
 Списывается стоимость записанного фрагмента, остаток меньше одной буквы сохраняется.
 

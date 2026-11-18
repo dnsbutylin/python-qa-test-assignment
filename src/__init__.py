@@ -1,5 +1,5 @@
-"""Каркас автотестов: один класс Contract на данные и на ожидаемый результат."""
+"""Модели ответов тестового задания."""
 
-from src.contract import Contract
+from src.models import PenResponse
 
-__all__ = ["Contract"]
+__all__ = ["PenResponse"]
